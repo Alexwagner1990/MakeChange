@@ -7,24 +7,34 @@ public class MakeChangeApp {
 static Scanner input;
 
 	public static void main(String[] args) {
-		System.out.println("WELCOME TO THE FREEDOM EMPORIUM CAPITALISM SUPERSTORE AUTOMATED BRANCH!");
+		System.out.println("WELCOME TO THE AMERICAN FREEDOM EMPORIUM CAPITALISM SUPERSTORE AUTOMATED BRANCH!");
 		double cost = costOfItem();
 		isThisCostPositive(cost); //this doesn't change the value of cost
 		double cash	= howMuchIsCustomerPaying();
 		isThisCashPositive(cash);
 		double finalcost = roundDoublesToNearestCent(cost);
 		double finalcash = roundDoublesToNearestCent(cash);
-		System.out.println("DUE TO THE INCREASED POPULARITY OF OFFICE SPACE,\n WE NO LONGER SELL ITEMS AT COSTS WITH FRACTIONS OF A CENT\nNOR DO WE ACCEPT FRACTIONS OF A CENT IN PAYMENT\nTHE FREEDOM EMPORIUM CAPITALISM SUPERSTORE CORPORATE TEAM\nAPOLOGIZES FOR THE INCONVENIENCE!");
+		System.out.println("DUE TO THE INCREASED POPULARITY OF OFFICE SPACE,\n WE NO LONGER SELL ITEMS AT COSTS WITH FRACTIONS OF A CENT\nNOR DO WE ACCEPT FRACTIONS OF A CENT IN PAYMENT\nTHE AMERICAN FREEDOM EMPORIUM CAPITALISM SUPERSTORE CORPORATE TEAM\nAPOLOGIZES FOR THE INCONVENIENCE!");
 		doesCustomerPayEnough(finalcost, finalcash);
+		doesCustomerNeedChange(finalcost, finalcash);
 		
 	}
 	
+	public static void doesCustomerNeedChange(double finalcost, double finalcash) {
+		if (finalcost == finalcash) {
+			System.out.println("NO CHANGE REQUIRED. \nTHE AMERICAN FREEDOM EMPORIUM CAPITALISM SUPERSTORE CORPORATION VALUES YOUR SLAVISH LOYALTY AND IMPRESSIONABLE FRONTAL CORTEX.\nHAVE A NICE DAY!");
+			System.exit(0);
+		}
+		double change = finalcash-finalcost;
+		System.out.println("THE FAIRNESS IN FISCAL EXCHANGE ACT OF 1790 REQUIRES WE RETURN TO YOU THE EXCESS MONIES PAID\nDISPENSING $" + change + "PROCESSING . . .");
+	}
+
 	public static void doesCustomerPayEnough(double cost, double cash) {
 		do {
 			if(cost > cash) {
 				double needmore = cost-cash;
-				System.out.println("INVALID TRANSACTION: $" +needmore+ "MORE DOLLARS REQUIRED.\nPLEASE BEGIN A NEW TRANSACTION.");
-				
+				System.out.println("INVALID TRANSACTION: $" +needmore+ " MORE DOLLARS REQUIRED.\nPLEASE BEGIN A NEW TRANSACTION.");
+				//finish this loop out - will probably do a scanner or just recall howMuchIsCustomerPaying();
 			}
 		}while (cost > cash);
 		System.out.println("PAYMENT ACCEPTED! PROCESSING . . . . . . .");
