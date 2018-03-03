@@ -7,14 +7,37 @@ public class MakeChangeApp {
 static Scanner input;
 
 	public static void main(String[] args) {
-		System.out.println("WELCOME TO CAPITALISM SUPERSTORE AUTOMATED BRANCH!");
+		System.out.println("WELCOME TO THE FREEDOM EMPORIUM CAPITALISM SUPERSTORE AUTOMATED BRANCH!");
 		double cost = costOfItem();
-		isThisCostPositive(cost);
+		isThisCostPositive(cost); //this doesn't change the value of cost
 		double cash	= howMuchIsCustomerPaying();
-		isThisCashPositive(cash);				
+		isThisCashPositive(cash);
+		double finalcost = roundDoublesToNearestCent(cost);
+		double finalcash = roundDoublesToNearestCent(cash);
+		System.out.println("DUE TO THE INCREASED POPULARITY OF OFFICE SPACE,\n WE NO LONGER SELL ITEMS AT COSTS WITH FRACTIONS OF A CENT\nNOR DO WE ACCEPT FRACTIONS OF A CENT IN PAYMENT\nTHE FREEDOM EMPORIUM CAPITALISM SUPERSTORE CORPORATE TEAM\nAPOLOGIZES FOR THE INCONVENIENCE!");
+		doesCustomerPayEnough(finalcost, finalcash);
 		
 	}
 	
+	public static void doesCustomerPayEnough(double cost, double cash) {
+		do {
+			if(cost > cash) {
+				double needmore = cost-cash;
+				System.out.println("INVALID TRANSACTION: $" +needmore+ "MORE DOLLARS REQUIRED.\nPLEASE BEGIN A NEW TRANSACTION.");
+				
+			}
+		}while (cost > cash);
+		System.out.println("PAYMENT ACCEPTED! PROCESSING . . . . . . .");
+	}
+
+	public static double roundDoublesToNearestCent(double rawnumber) {
+		int cashvalueint = (int) (rawnumber * 100); //turn raw data to an int, then put it back to a double to get rid of decimals
+		double cashvaluedouble = (cashvalueint); // turn it back to a double so that dividing by 100 will return two decimals
+		double cashvalue = cashvaluedouble/100; //gives the decimal points back to the number
+		
+		return cashvalue;
+	}
+
 	public static double isThisCostPositive(double cost) {
 		
 		while(true) {
