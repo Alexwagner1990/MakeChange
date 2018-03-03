@@ -3,72 +3,143 @@ package com.skilldistillery.projects.makechange;
 import java.util.Scanner;
 
 public class MakeChangeApp {
-	
-static Scanner input;
+
+	static Scanner input;
 
 	public static void main(String[] args) {
 		System.out.println("WELCOME TO THE AMERICAN FREEDOM EMPORIUM CAPITALISM SUPERSTORE AUTOMATED BRANCH!");
 		double cost = costOfItem();
-		isThisCostPositive(cost); //this doesn't change the value of cost
-		double cash	= howMuchIsCustomerPaying();
+		isThisCostPositive(cost); // this doesn't change the value of cost
+		double cash = howMuchIsCustomerPaying();
 		isThisCashPositive(cash);
 		double finalcost = roundDoublesToNearestCent(cost);
 		double finalcash = roundDoublesToNearestCent(cash);
-		System.out.println("DUE TO THE INCREASED POPULARITY OF OFFICE SPACE,\n WE NO LONGER SELL ITEMS AT COSTS WITH FRACTIONS OF A CENT\nNOR DO WE ACCEPT FRACTIONS OF A CENT IN PAYMENT\nTHE AMERICAN FREEDOM EMPORIUM CAPITALISM SUPERSTORE CORPORATE TEAM\nAPOLOGIZES FOR THE INCONVENIENCE!");
+		System.out.println(
+				"DUE TO THE INCREASED POPULARITY OF OFFICE SPACE (TM),\nWE NO LONGER SELL ITEMS AT COSTS WITH FRACTIONS OF A CENT\nNOR DO WE ACCEPT FRACTIONS OF A CENT IN PAYMENT\nTHE AMERICAN FREEDOM EMPORIUM CAPITALISM SUPERSTORE CORPORATE TEAM\nAPOLOGIZES FOR THE INCONVENIENCE!");
 		doesCustomerPayEnough(finalcost, finalcash);
-		doesCustomerNeedChange(finalcost, finalcash);
-		
+		double change = doesCustomerNeedChange(finalcost, finalcash);
+		change = doesCustomerNeedTwenties(change);
+		change = doesCustomerNeedTens(change);
+		change = doesCustomerNeedFives(change);
+		change = doesCustomerNeedOnes(change);
+
+	}
+
+	public static double doesCustomerNeedOnes(double change) {
+		int ones = (int)(change);
+		if(ones == 1) {
+			System.out.println("PRINTING " + ones + " ONE DOLLAR BILL.");
+		}
+		if(ones > 1) {
+			System.out.println("PRINTING " + ones + " ONE DOLLAR BILLS.");
+		}
+		double remainingchange = change % 5;
+		remainingchange = roundDoublesToNearestCent(remainingchange);
+		return remainingchange;
 	}
 	
-	public static void doesCustomerNeedChange(double finalcost, double finalcash) {
+	public static double doesCustomerNeedFives(double change) {
+		int fives = (int)(change / 5);
+		if(fives == 1) {
+			System.out.println("PRINTING " + fives + " FIVE DOLLAR BILL.");
+		}
+		else if(fives > 1) {
+			System.out.println("PRINTING " + fives + " FIVE DOLLAR BILLS.");
+		}
+		double remainingchange = change % 5;
+		remainingchange = roundDoublesToNearestCent(remainingchange);
+		return remainingchange;
+	}
+	
+	public static double doesCustomerNeedTens(double change) {
+		int tens = (int)(change / 10);
+		if(tens == 1) {
+			System.out.println("PRINTING " + tens + " TEN DOLLAR BILL.");
+		}
+		else if(tens > 1) {
+			System.out.println("PRINTING " + tens + " TEN DOLLAR BILLS.");
+		}
+		double remainingchange = change % 10;
+		remainingchange = roundDoublesToNearestCent(remainingchange);
+		return remainingchange;
+	}
+	
+	public static double doesCustomerNeedTwenties(double change) {
+		int twenties = (int)(change / 20);
+			if(twenties == 1) {
+				System.out.println("PRINTING " + twenties + " TWENTY DOLLAR BILL.");
+			}
+			else if(twenties > 1) {
+				System.out.println("PRINTING " + twenties + " TWENTY DOLLAR BILLS.");
+			}
+		double remainingchange = change % 20;
+		remainingchange = roundDoublesToNearestCent(remainingchange);
+		return remainingchange;
+	}
+
+	public static double doesCustomerNeedChange(double finalcost, double finalcash) {
 		if (finalcost == finalcash) {
-			System.out.println("NO CHANGE REQUIRED. \nTHE AMERICAN FREEDOM EMPORIUM CAPITALISM SUPERSTORE CORPORATION VALUES YOUR SLAVISH LOYALTY AND IMPRESSIONABLE FRONTAL CORTEX.\nHAVE A NICE DAY!");
+			System.out.println(
+					"NO CHANGE REQUIRED. \nTHE AMERICAN FREEDOM EMPORIUM CAPITALISM SUPERSTORE CORPORATION VALUES YOUR SLAVISH LOYALTY AND IMPRESSIONABLE FRONTAL CORTEX.\nHAVE A NICE DAY!");
 			System.exit(0);
 		}
-		double change = finalcash-finalcost;
-		System.out.println("THE FAIRNESS IN FISCAL EXCHANGE ACT OF 1790 REQUIRES WE RETURN TO YOU THE EXCESS MONIES PAID\nDISPENSING $" + change + "PROCESSING . . .");
+		roundDoublesToNearestCent(finalcost);
+		roundDoublesToNearestCent(finalcash);
+		double change = finalcash - finalcost;
+		change = roundDoublesToNearestCent(change);
+		System.out.println(
+				"THE FAIRNESS IN FISCAL EXCHANGE ACT OF 1790 REQUIRES WE RETURN TO YOU THE EXCESS MONIES PAID\nDISPENSING $"
+						+ change + "\nPROCESSING . . .");
+		return change;
 	}
 
 	public static void doesCustomerPayEnough(double cost, double cash) {
 		do {
-			if(cost > cash) {
-				double needmore = cost-cash;
-				System.out.println("INVALID TRANSACTION: $" +needmore+ " MORE DOLLARS REQUIRED.\nPLEASE BEGIN A NEW TRANSACTION.");
-				//finish this loop out - will probably do a scanner or just recall howMuchIsCustomerPaying();
+			if (cost > cash) {
+				cost = roundDoublesToNearestCent(cost);
+				cash = roundDoublesToNearestCent(cash);
+				double needmore = cost - cash;
+				System.out.println("INVALID TRANSACTION: $" + needmore
+						+ " MORE DOLLARS REQUIRED.\nPLEASE BEGIN A NEW TRANSACTION.");
+				// finish this loop out - will probably do a scanner or just recall
+				// howMuchIsCustomerPaying();
 			}
-		}while (cost > cash);
-		System.out.println("PAYMENT ACCEPTED! PROCESSING . . . . . . .");
+		} while (cost > cash);
+		System.out.println("PAYMENT ACCEPTED! \nPROCESSING . . . . . . .");
 	}
 
 	public static double roundDoublesToNearestCent(double rawnumber) {
-		int cashvalueint = (int) (rawnumber * 100); //turn raw data to an int, then put it back to a double to get rid of decimals
-		double cashvaluedouble = (cashvalueint); // turn it back to a double so that dividing by 100 will return two decimals
-		double cashvalue = cashvaluedouble/100; //gives the decimal points back to the number
-		
+		int cashvalueint = (int) (rawnumber * 100); // turn raw data to an int, then put it back to a double to get rid
+													// of decimals
+		double cashvaluedouble = (cashvalueint); // turn it back to a double so that dividing by 100 will return two
+													// decimals
+		double cashvalue = cashvaluedouble / 100; // gives the decimal points back to the number
+
 		return cashvalue;
 	}
 
 	public static double isThisCostPositive(double cost) {
-		
-		while(true) {
+
+		while (true) {
 			if (cost < 0) {
-			System.out.print("ERROR: WE DO NOT SELL ITEMS AT NEGATIVE PRICES!\nPLEASE CHECK BACK DURING BLACK FRIDAY CLOSEOUT \nOR TRY A POSITIVE COST\n***************\n");
-			cost = costOfItem();
-			}
-			else {
+				System.out.print(
+						"ERROR: WE DO NOT SELL ITEMS AT NEGATIVE PRICES!\nPLEASE CHECK BACK DURING BLACK FRIDAY CLOSEOUT \nOR TRY A POSITIVE COST\n***************\n");
+				cost = costOfItem();
+			} else {
 				break;
 			}
 		}
 		return cost;
 	}
+
 	public static double isThisCashPositive(double cash) {
 
-		while(true) {
+		while (true) {
 			if (cash < 0) {
-				System.out.print("ERROR: WE DO NOT ACCEPT NEGATIVE AMMOUNTS OF CASH!\n PLEASE CHECK BACK DURING THE NEXT GLOBAL FINANCIAL CRISIS \nOR SUBMIT A POSITIVE AMOUNT OF CASH\n***************\n");
+				System.out.print(
+						"ERROR: WE DO NOT ACCEPT NEGATIVE AMOUNTS OF CASH!\n PLEASE CHECK BACK DURING THE NEXT GLOBAL FINANCIAL CRISIS \nOR SUBMIT A POSITIVE AMOUNT OF CASH\n***************\n");
 				cash = costOfItem();
-			}
-			else {
+			} else {
 				break;
 			}
 		}
@@ -81,6 +152,7 @@ static Scanner input;
 		double cost = item.nextDouble();
 		return cost;
 	}
+
 	public static double howMuchIsCustomerPaying() {
 		Scanner item = new Scanner(System.in);
 		System.out.print("PLEASE ENTER THE AMOUNT YOU WILL PAY: ");
@@ -90,11 +162,10 @@ static Scanner input;
 
 }
 
-
-/* HINTS
- * Multiply a double by 100 and cast it as an int, then divide that int by 100 to get rid of extra decimal places
+/*
+ * HINTS Multiply a double by 100 and cast it as an int, then divide that int by
+ * 100 to get rid of extra decimal places
  */
-
 
 // Make Change (Cash Register)
 // Overview
