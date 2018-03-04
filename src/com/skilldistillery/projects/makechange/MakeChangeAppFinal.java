@@ -37,6 +37,7 @@ public class MakeChangeAppFinal {
 
 	public static int turnValuesIntoPennies(double totalInPennies) {
 		int valueInPennies = (int) (totalInPennies *100);
+		System.out.println(valueInPennies);
 		return valueInPennies;
 	}
 

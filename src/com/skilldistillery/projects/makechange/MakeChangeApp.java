@@ -243,14 +243,14 @@ public class MakeChangeApp {
 
 	public static double costOfItem() {
 		Scanner item = new Scanner(System.in);
-		System.out.print("ENTER THE COST OF YOUR DESIRED ITEM, VALUED CONSUMER:");
+		System.out.print("ENTER THE COST OF YOUR DESIRED ITEM, VALUED CONSUMER: $");
 		double cost = item.nextDouble();
 		return cost;
 	}
 
 	public static double howMuchIsCustomerPaying() {
 		Scanner item = new Scanner(System.in);
-		System.out.print("PLEASE ENTER THE AMOUNT YOU WILL PAY: ");
+		System.out.print("PLEASE ENTER THE AMOUNT YOU WILL PAY: $");
 		double cash = item.nextDouble();
 		return cash;
 	}
